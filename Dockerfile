@@ -17,8 +17,8 @@ RUN	git clone https://github.com/casperklein/bash-pack \
 &&	/bash-pack/install.sh -y
 
 # Build final image
-RUN	apt-get -y install dumb-init \
-&&	rm -rf /var/lib/apt/lists/*
+RUN	apt-get -y install dumb-init
+#&&	rm -rf /var/lib/apt/lists/*
 FROM	scratch
 COPY	--from=build / /
 
