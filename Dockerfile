@@ -1,4 +1,4 @@
-ARG	FROM=debian:10-slim
+ARG	FROM=debian:10
 
 FROM    $FROM as build
 
