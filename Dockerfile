@@ -1,6 +1,6 @@
 ARG	debian=10
 
-FROM    debian:$debian-slim as build
+FROM    debian:$debian as build
 
 ENV	USER="casperklein"
 ENV	NAME="dev"
