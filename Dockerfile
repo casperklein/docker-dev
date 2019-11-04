@@ -14,7 +14,7 @@ RUN     apt-get update \
 
 # bash-pack
 RUN	git clone https://github.com/casperklein/bash-pack
-RUN	sed -i '/checkinstall/d' bash-pack/packages \
+RUN	sed -i '/checkinstall/d' bash-pack/packages
 RUN	/bash-pack/install.sh -y
 
 RUN	apt-file update
