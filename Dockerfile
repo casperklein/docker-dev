@@ -13,16 +13,17 @@ RUN     apt-get update \
 &&	apt-get -y install $PACKAGES
 
 # bash-pack
-RUN	git clone https://github.com/casperklein/bash-pack \
-&&	sed -i '/checkinstall/d' bash-pack/packages \
-&&	/bash-pack/install.sh -y
+RUN	git clone https://github.com/casperklein/bash-pack
+RUN	sed -i '/checkinstall/d' bash-pack/packages \
+RUN	/bash-pack/install.sh -y
+
+RUN	apt-file update
 
 # Copy root filesystem
 COPY	rootfs /
 
-# Create debian package with checkinstall
+# install checkinstall
 RUN	apt-get -y --no-install-recommends install file dpkg-dev && dpkg -i /checkinstall_1.6.2-4_amd64.deb
-
 
 # Build final image
 RUN	apt-get -y install dumb-init
