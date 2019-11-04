@@ -1,10 +1,11 @@
-ARG	FROM=debian:10
+ARG	debian=10
 
-FROM    $FROM as build
+FROM    debian:$debian-slim as build
 
 ENV	USER="casperklein"
 ENV	NAME="dev"
 ENV	VERSION="latest"
+
 ENV	PACKAGES="git"
 
 # Install packages
@@ -15,6 +16,13 @@ RUN     apt-get update \
 RUN	git clone https://github.com/casperklein/bash-pack \
 &&	sed -i '/checkinstall/d' bash-pack/packages \
 &&	/bash-pack/install.sh -y
+
+# Copy root filesystem
+COPY	rootfs /
+
+# Create debian package with checkinstall
+RUN	apt-get -y --no-install-recommends install file dpkg-dev && dpkg -i /checkinstall_1.6.2-4_amd64.deb
+
 
 # Build final image
 RUN	apt-get -y install dumb-init
