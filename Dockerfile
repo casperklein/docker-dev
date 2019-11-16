@@ -25,6 +25,9 @@ COPY	rootfs /
 # install checkinstall
 RUN	apt-get -y --no-install-recommends install file dpkg-dev && dpkg -i /checkinstall_1.6.2-4_amd64.deb
 
+# Cleanup
+RUN	apt -y autoremove
+
 # Build final image
 RUN	apt-get -y install dumb-init
 #&&	rm -rf /var/lib/apt/lists/*
