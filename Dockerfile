@@ -1,6 +1,6 @@
 ARG	debian=10
 
-FROM    debian:$debian as build
+FROM	debian:$debian as build
 
 ENV	USER="casperklein"
 ENV	NAME="dev"
@@ -9,7 +9,7 @@ ENV	VERSION="latest"
 ENV	PACKAGES="git"
 
 # Install packages
-RUN     apt-get update \
+RUN	apt-get update \
 &&	apt-get -y install $PACKAGES
 
 # bash-pack
