@@ -25,6 +25,10 @@ COPY	rootfs /
 # install checkinstall
 RUN	apt-get -y --no-install-recommends install file dpkg-dev && dpkg -i /checkinstall_1.6.2-4_amd64.deb
 
+# Set timezone
+RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
+&&	dpkg-reconfigure -f noninteractive tzdata
+
 # Build final image
 RUN	apt-get -y install dumb-init
 #&&	rm -rf /var/lib/apt/lists/*
