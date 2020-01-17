@@ -8,6 +8,8 @@ ENV	VERSION="latest"
 
 ENV	PACKAGES="git"
 
+SHELL	["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install packages
 RUN	apt-get update \
 &&	apt-get -y install $PACKAGES
