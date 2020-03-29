@@ -39,8 +39,8 @@ RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
 # Build final image
 RUN	apt-get -y install dumb-init
 #&&	rm -rf /var/lib/apt/lists/*
-FROM	scratch
-COPY	--from=build / /
+#FROM	scratch
+#COPY	--from=build / /
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
