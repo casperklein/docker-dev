@@ -1,12 +1,10 @@
-ARG	debian=10
-
-FROM	debian:$debian as build
+FROM	debian:10 as build
 
 ENV	USER="casperklein"
 ENV	NAME="dev"
 ENV	VERSION="0.1"
 
-ENV	PACKAGES="git"
+ENV	PACKAGES="git dumb-init man"
 
 SHELL	["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -18,8 +16,6 @@ RUN	apt-get update \
 RUN	git clone https://github.com/casperklein/bash-pack
 #RUN	sed -i '/checkinstall/d' bash-pack/packages
 RUN	/bash-pack/install.sh -y
-
-RUN	apt-file update
 
 # Copy root filesystem
 COPY	rootfs /
@@ -37,8 +33,6 @@ RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
 &&	dpkg-reconfigure -f noninteractive tzdata
 
 # Build final image
-RUN	apt-get -y install dumb-init
-#&&	rm -rf /var/lib/apt/lists/*
 FROM	scratch
 COPY	--from=build / /
 
