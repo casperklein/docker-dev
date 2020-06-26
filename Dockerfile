@@ -29,8 +29,8 @@ RUN	MASCHINE=$(uname -m) \
 ;	apt-get -y --no-install-recommends install file dpkg-dev && dpkg -i /checkinstall_1.6.2-4_$ARCH.deb
 
 # Set timezone
-RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime \
-&&	dpkg-reconfigure -f noninteractive tzdata
+RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+#&&	dpkg-reconfigure -f noninteractive tzdata
 
 # Build final image
 FROM	scratch
