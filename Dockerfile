@@ -1,4 +1,5 @@
 FROM	debian:10 as build
+#FROM	ubuntu as build
 
 ENV	USER="casperklein"
 ENV	NAME="dev"
@@ -9,6 +10,7 @@ ENV	PACKAGES="git dumb-init man"
 SHELL	["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install packages
+#ENV	DEBIAN_FRONTEND=noninteractive
 RUN	apt-get update \
 &&	apt-get -y install $PACKAGES
 
