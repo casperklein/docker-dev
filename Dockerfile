@@ -23,9 +23,9 @@ RUN	/bash-pack/install.sh -y
 COPY	rootfs /
 
 # install checkinstall
-RUN	MASCHINE=$(uname -m) \
-;	[ "$MASCHINE" == "x86_64" ] && ARCH="amd64" || { \
-		[ "$MASCHINE" == "aarch64" ] && ARCH="arm64" || \
+RUN	MACHINE=$(uname -m) \
+;	[ "$MACHINE" == "x86_64" ] && ARCH="amd64" || { \
+		[ "$MACHINE" == "aarch64" ] && ARCH="arm64" || \
 			ARCH="armhf"; \
 	} \
 ;	apt-get -y --no-install-recommends install file dpkg-dev && dpkg -i /checkinstall_1.6.2-4_$ARCH.deb
