@@ -1,0 +1,13 @@
+name: "Build"
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get files from GitHub
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        run: "docker build -t build:$(date +%s) ."
