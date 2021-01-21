@@ -1,34 +1,19 @@
 FROM	debian:10 as build
-#FROM	ubuntu as build
 
-ENV	USER="casperklein"
-ENV	NAME="dev"
-ENV	VERSION="0.1"
-
-ENV	PACKAGES="git dumb-init man"
+ENV	PACKAGES="file checkinstall dpkg-dev git dumb-init man checkinstall"
 
 SHELL	["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install packages
-#ENV	DEBIAN_FRONTEND=noninteractive
+ENV	DEBIAN_FRONTEND=noninteractive
+RUN	echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sources.list.d/buster-backports.list
 RUN	apt-get update \
+&&	apt-get -y upgrade \
 &&	apt-get -y install $PACKAGES
 
 # bash-pack
 RUN	git clone https://github.com/casperklein/bash-pack
-#RUN	sed -i '/checkinstall/d' bash-pack/packages
 RUN	/bash-pack/install.sh -y
-
-# Copy root filesystem
-COPY	rootfs /
-
-# install checkinstall
-RUN	MACHINE=$(uname -m) \
-;	[ "$MACHINE" == "x86_64" ] && ARCH="amd64" || { \
-		[ "$MACHINE" == "aarch64" ] && ARCH="arm64" || \
-			ARCH="armhf"; \
-	} \
-;	apt-get -y --no-install-recommends install file dpkg-dev && dpkg -i /checkinstall_1.6.2-4_$ARCH.deb
 
 # Set timezone
 RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
@@ -36,8 +21,8 @@ RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 # Build final image
 FROM	scratch
-COPY	--from=build / /
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-
 CMD	["/bin/bash"]
+
+COPY	--from=build / /
