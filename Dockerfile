@@ -1,15 +1,20 @@
 FROM	debian:10 as build
 
-ENV	PACKAGES="file checkinstall dpkg-dev git dumb-init man checkinstall"
+ENV	PACKAGES="file checkinstall dpkg-dev git dumb-init man"
 
 SHELL	["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install packages
 ENV	DEBIAN_FRONTEND=noninteractive
-RUN	echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sources.list.d/buster-backports.list
 RUN	apt-get update \
 &&	apt-get -y upgrade \
-&&	apt-get -y install $PACKAGES
+&&	apt-get -y install $PACKAGES \
+# check install
+&&	echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sources.list.d/buster-backports.list \
+&&	apt-get update \
+&&	apt-get -y install checkinstall \
+&&	rm /etc/apt/sources.list.d/buster-backports.list \
+&&	apt-get update
 
 # bash-pack
 RUN	git clone https://github.com/casperklein/bash-pack
