@@ -22,6 +22,9 @@ RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 # Build final image
 FROM	scratch
 
+ARG	VERSION
+ENV	Version=$VERSION
+
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD	["/bin/bash"]
 
