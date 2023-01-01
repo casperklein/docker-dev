@@ -2,10 +2,10 @@ FROM	debian:11 as build
 
 SHELL	["/bin/bash", "-o", "pipefail", "-c"]
 
-ENV	PACKAGES="file dpkg-dev checkinstall git ca-certificates dumb-init"
+ARG	PACKAGES="file dpkg-dev checkinstall git ca-certificates dumb-init"
 
 # Install packages
-ENV	DEBIAN_FRONTEND=noninteractive
+ARG	DEBIAN_FRONTEND=noninteractive
 #RUN	echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sources.list.d/buster-backports.list \
 RUN	apt-get update \
 &&	apt-get -y upgrade \
@@ -21,8 +21,7 @@ RUN	ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 # Build final image
 FROM	scratch
 
-ARG	VERSION
-ENV	Version=$VERSION
+ARG	VERSION="unknown"
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD	["/bin/bash"]
