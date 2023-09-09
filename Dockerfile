@@ -1,4 +1,4 @@
-FROM	debian:12 as build
+FROM	debian:12-slim as build
 
 SHELL	["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -6,7 +6,6 @@ ARG	PACKAGES="file dpkg-dev checkinstall git ca-certificates dumb-init"
 
 # Install packages
 ARG	DEBIAN_FRONTEND=noninteractive
-#RUN	echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sources.list.d/buster-backports.list \
 RUN	apt-get update \
 &&	apt-get -y upgrade \
 &&	apt-get -y --no-install-recommends install $PACKAGES
