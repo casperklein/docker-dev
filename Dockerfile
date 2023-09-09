@@ -1,4 +1,4 @@
-FROM	debian:11 as build
+FROM	debian:12 as build
 
 SHELL	["/bin/bash", "-o", "pipefail", "-c"]
 
