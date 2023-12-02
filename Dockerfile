@@ -11,7 +11,7 @@ RUN	apt-get update \
 &&	apt-get -y --no-install-recommends install $PACKAGES
 
 # bash-pack
-RUN	git clone https://github.com/casperklein/bash-pack /scripts \
+RUN	git clone --depth 1 https://github.com/casperklein/bash-pack /scripts \
 &&	/scripts/install.sh -y
 
 # Set timezone
